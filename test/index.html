@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./../index.js"></script>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+        new Swiper({
+            container: document.getElementById("box"),
+            content: [
+                {src: 'https://segmentfault.com/img/remote/1460000015482456', href: '', target: true}, 
+                {src: 'http://ww1.sinaimg.cn/large/005Y4rCogy1ft1ikzcqzqj30ka0et77a.jpg'}, 
+                {src: 'https://segmentfault.com/img/bVbc08a?w=740&h=416'},
+                {dom: '<a class="img_a_box" href="javascript:;" style="background-image:url(http://ww1.sinaimg.cn/large/005Y4rCogy1ft1ikzcqzqj30ka0et77a.jpg)"></a>'}
+            ],
+            have_button: true,
+            have_bar: true,
+            auto: 10000
+        });
+    </script>
+</body>
+</html>

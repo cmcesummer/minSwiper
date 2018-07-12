@@ -51,14 +51,14 @@
     }
 
     // 创建样式
-    var BaseStyle = (function _createStyle(dict) {
+    var BaseStyle = (function _createStyle(dict) { ///cmcesummer/minSwiper/blob/master/image/circul_icon.png?raw=true
         var swiper_button =
-            ".swiper_button_prev, .swiper_button_next{width:77px; height:41px;background: url(/swiper_button.png); position: absolute; top: 50%; margin-top: -10px;z-index: 5;cursor: pointer;}" +
+            ".swiper_button_prev, .swiper_button_next{width:77px; height:41px;background: url(https://github.com/cmcesummer/minSwiper/blob/master/image/swiper_button.png?raw=true); position: absolute; top: 50%; margin-top: -10px;z-index: 5;cursor: pointer;}" +
             ".swiper_button_prev{left: 10px;background-position: 0 -45px;}" +
             ".swiper_button_next {right: 10px;background-position: -78px -45px;}";
         var bar =
             ".u_slider_box .control_item {position: absolute; bottom: 10px; text-align: center; z-index: 10; width: 100%;}" +
-            ".u_slider_box .control_item span {display: inline-block; width:15px; height: 15px;  border-radius: 15px; cursor: pointer;margin: 0 5px; background-image: url(/circul_icon.png); background-repeat:no-repeat; background-position: 0 -65px;}" +
+            ".u_slider_box .control_item span {display: inline-block; width:15px; height: 15px;  border-radius: 15px; cursor: pointer;margin: 0 5px; background-image: url(https://github.com/cmcesummer/minSwiper/blob/master/image/circul_icon.png?raw=true); background-repeat:no-repeat; background-position: 0 -65px;}" +
             ".u_slider_box .control_item span.active{background-position: 0 0;}";
         var style1 =
             ".u_swiper_box {width: 1010px; margin:0 auto ; padding-top: 250px; box-sizing: border-box;}" +
@@ -168,7 +168,7 @@
         function btnChange(type, e, fn) {
             var index = context.starkMap.activePage,
                 indexs = type === "next" ? index + 1 : index - 1,
-                length = context.starkMap.imgs_arr.length,
+                length = context.starkMap.content.length,
                 next_index = parseListIndex(indexs, length);
             change(next_index);
             fn && fn.call(context, e, type);
@@ -215,8 +215,6 @@
     /**
      * @param {} container
      * @param {} content 内容数组 包含{ src , href, target, ||  dom } 
-     * @param {} imgs_arr 图片数组
-     * @param {} urls_arr 图片跳转链接数组
      * @param {} have_button  左右控制按钮
      * @param {} have_bar 底部分页 bar
      * @param {} auto 自动播放
@@ -401,6 +399,11 @@
             } else if(window.attachEvent) {
                 element.attachEvent('on' + type, handle);
             }
+        },
+        delegate : function(element, type, tagname , handle) {
+            this.bind(element, type, function(e) {
+                handle(e)
+            })
         }
     })
 
