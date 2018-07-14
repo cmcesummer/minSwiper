@@ -392,20 +392,75 @@
     });
 
     // 
+ 
     Swiper.extends(true, Swiper, {
         bind: function(element, type, handle) {
+            function __eventHandler(e) {
+                var event = e || window.event
+                handle.call(this,event)
+            }
             if(window.addEventListener) {
-                element.addEventListener(type, handle, false);
+                element.addEventListener(type, __eventHandler, false);
             } else if(window.attachEvent) {
-                element.attachEvent('on' + type, handle);
+                element.attachEvent('on' + type, __eventHandler);
+            } else {
+                target['on' + type] = __eventHandler;
             }
         },
-        delegate : function(element, type, tagname , handle) {
+        delegate : function(element, type, selector , handle) {
+            // selector 为 string
             this.bind(element, type, function(e) {
-                handle(e)
+                var target = e.target || e.srcElement,
+                    _selector = '',
+                    judge = function(target, the_if) {
+                        if(the_if(target)) {
+                            handle.call(this, e)
+                        } else {
+                            if(_event_utils.bind_parent(target, function(parent) {
+                                return the_if(parent)
+                            }, element)) {
+                                handle.call(this, e)
+                            }
+                        }
+                    };
+
+                if(selector.indexOf('#') === 0) {
+                    _selector = selector.substring(1);
+                    judge(target, function(target) {
+                        return target.id.toLowerCase() === _selector;
+                    })
+                } else if(/^\.([\w-]+)$/.test(selector)) {
+                    _selector = selector.substring(1);
+                    judge(target, function(target) {
+                        return new RegExp('(^|\\s+)'+ _selector +'(\\s+|$)').test(target.className.toLowerCase())
+                    })
+                } else {
+                    _selector = selector;
+                    judge(target, function(target) {
+                        return _selector === target.nodeName.toLowerCase();
+                    })
+                }
             })
         }
     })
+
+    var _event_utils = {
+        bind_parent: function (target, fn, top) {
+            if(top === target) {
+                return false
+            }
+            var parent = target.parentElement || target.parentNode ;
+            if(parent) {
+                if(fn(parent)) {
+                    return parent
+                } else {
+                    return _event_utils.bind_parent(parent, fn)
+                }
+            } else {
+                return null
+            }
+        }
+    }
 
     if (!noGlobal) {
         window.Swiper = Swiper;

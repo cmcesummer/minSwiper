@@ -9,6 +9,21 @@
 </head>
 <body>
     <div id="box"></div>
+
+
+    <div class="a">
+        啊大帝撒多撒多撒
+        <br>
+        <div class="base">
+            3131321331
+            <br>
+
+            <div class="c">
+                ffdsdf 
+            </div>
+        </div>
+    </div>
+
     <script>
         new Swiper({
             container: document.getElementById("box"),
@@ -22,6 +37,14 @@
             have_bar: true,
             auto: 10000
         });
+        var a = document.querySelector('.a'),
+            b = document.querySelector('.base'),
+            c = document.querySelector('.c');
+
+        Swiper.delegate(a, 'click', '.base', function(e) {
+            console.log(e)
+        })
+
     </script>
 </body>
 </html>
