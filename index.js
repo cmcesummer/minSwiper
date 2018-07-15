@@ -179,14 +179,14 @@
                 var target = e.target || e.srcElement,
                     index = barDomArr.indexOf(target);
                 change(index);
-                dict.bar_event && dict.bar_event.call(context, e);
+                dict.bar_event && dict.bar_event.call(context, e, index);
             });
         }
         // 按钮 点击事件
         if (swiper_button_prev) {
             // 上一个
             Swiper.bind(swiper_button_prev, "click", function(e) {
-                btnChange("last", e, dict.button_click_event);
+                btnChange("last", e, dict.button_event);
             });
             // 下一个
             Swiper.bind(swiper_button_next, "click", function(e) {
