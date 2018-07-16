@@ -129,6 +129,7 @@ Swiper.delegate(element, type, selector , handle)
 - [x] 添加使用说明
 - [ ] 添加其他样式
 - [x] 添加可拓展的例子
+目前的第三个样式纯粹在搞笑，我再想想
 
 ## CHANGELOG
 添加了事件代理，写的有点绕，不过是为了精简代码

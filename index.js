@@ -81,8 +81,16 @@
             ".swiper_wrapper a{width: 100%; height: 100%; display:inline-block; background-repeat:no-repeat;background-size:100%; background-position:center; cursor:default}" +
             swiper_button +
             bar;
-
-        return [style1, style2];
+        var style3 = 
+            ".u_slider_box, .swiper_wrapper {position: absolute; width: 100%; height:100%; overflow: hidden}" +
+            ".swiper_wrapper .img{opacity: 0; left:100%; z-index:0; width: 100%; height:100%; z-index:1; position: absolute;-o-transition: all .3s linear; -moz-transition: all .3s linear; -webkit-transition: all .3s linear; transition: left 3s linear; -webkit-user-select: none;-webkit-touch-callout: none;-moz-user-select: none;-ms-user-select: none; user-select: none;}" +
+            ".swiper_wrapper .top {z-index:2; opacity: 1; left:0px; box-sizing: border-box }"  +
+            ".swiper_wrapper .next {opacity: 1;left:100%;}" +
+            ".swiper_wrapper .last {opacity: 1;left:-100%;}" +
+            ".swiper_wrapper a{width: 100%; height: 100%; display:inline-block; background-repeat:no-repeat;background-size:100%; background-position:center; cursor:default}" +
+            swiper_button + bar;
+    
+        return [style1, style2, style3];
     })();
 
     // 初始化 dom 结构
