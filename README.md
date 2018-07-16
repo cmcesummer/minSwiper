@@ -92,7 +92,7 @@ Swiper.extends(deep, target, source);
  * @param {object} parent 在哪个父元素下查找 默认 document
  */
 Swiper.queryByClass(classname, parent)
-
+ 
 /**
  * 提供 添加 移除 是否存在 classname 的方法， 兼容 ie6
  * @param {object} dom 操作的dom
