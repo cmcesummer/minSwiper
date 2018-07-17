@@ -41,6 +41,8 @@
 
     function _pureObject(tar) {
         if(!tar)  return false
+        // 兼容ie 8  DOM 不进行深拷贝
+        if(tar.nodeType === 1) return false
         return {}.toString.call(tar) === "[object Object]";
     }
 
