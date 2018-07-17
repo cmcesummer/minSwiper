@@ -16,12 +16,45 @@
     "use strict";
     var Swiper = null;
 
+    //兼容ie8 Array.indexOf
+    (function() {
+        'use strict';
+        if (!Array.prototype.indexOf) {
+            Array.prototype.indexOf = function(searchElement, fromIndex) {
+                var k;
+                if (this == null) throw new TypeError('"this" is null or not defined');
+                var O = Object(this);
+                var len = O.length >>> 0;
+                if (len === 0) return -1;
+                var n = +fromIndex || 0;
+                if (Math.abs(n) === Infinity)  n = 0;
+                if (n >= len) return -1;
+                k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+                while (k < len) {
+                    if (k in O && O[k] === searchElement) return k;
+                    k++;
+                }
+                return -1;
+            };
+        }
+    })();
+
     function _pureObject(tar) {
+        if(!tar)  return false
         return {}.toString.call(tar) === "[object Object]";
     }
 
     function _pureArray(tar) {
         return {}.toString.call(tar) === "[object Array]";
+    }
+
+     // 兼容 ie8
+     function _changeDomToArray(dom) {
+        var i = 0, length = dom.length, list = [];
+        for(; i < length; i++) {
+            list.push(dom[i])
+        }
+        return list
     }
 
     // 格式化数组下标
@@ -140,23 +173,20 @@
         var context = this,
             control_item = Swiper.queryByClass(
                 "control_item",
-                this.container
+                dict.container
             )[0],
             swiper_button_prev = Swiper.queryByClass(
                 "swiper_button_prev",
-                this.container
+                dict.container
             )[0],
             swiper_button_next = Swiper.queryByClass(
                 "swiper_button_next",
-                this.container
+                dict.container
             )[0],
-            barDomArr = [].slice.call(
-                Swiper.queryByClass("control_item", this.container)[0]
-                    .childNodes
-            ),
+            barDomArr = _changeDomToArray(Swiper.queryByClass("control_item", dict.container)[0].childNodes),
             swiper_wrapper = Swiper.queryByClass(
                 "swiper_wrapper",
-                this.container
+                dict.container
             )[0];
         var btnThrottle = false;
         function change(index) {
@@ -232,11 +262,11 @@
      * @param {} touch_event touch 事件
      */
     Swiper = function(dict) {
-        var starkMap = Swiper.extends(true, {}, dict);
+        var starkMap = Swiper.extend(true, {}, dict);
         this.container = starkMap.container;
         this.starkMap = starkMap;
         this.starkMap.activePage = 0;
-        var type = starkMap.type || 1;
+        var type = starkMap.type || 0;
         _appenStyle(BaseStyle[type], "swiperstyle" + type);
         // _init.call(this, starkMap);
         _init_.call(this, starkMap);
@@ -318,7 +348,7 @@
         }
     };
 
-    Swiper.extends = function extend(deep, target, source) {
+    Swiper.extend = function extend(deep, target, source) {
         var key = null;
         if (!deep) {
             for (key in source) {
@@ -344,7 +374,7 @@
     };
 
     // 挂载 通过classname 查询 dom 的方法 为 Swiper 的静态方法
-    Swiper.extends(true, Swiper, {
+    Swiper.extend(true, Swiper, {
         queryByClass: function(classname, parent) {
             if (!parent) {
                 parent = document;
@@ -355,7 +385,7 @@
             var eleArr = parent.getElementsByTagName("*");
             var classArr = [];
             for (var i = 0; i < eleArr.length; i++) {
-                if (dom_class.contains(eleArr[i], classname)) {
+                if (Swiper.domClass.contains(eleArr[i], classname)) {
                     classArr.push(eleArr[i]);
                 }
             }
@@ -364,7 +394,7 @@
     });
 
     // 挂载 className 操作方法 为 Swiper 的静态方法
-    Swiper.extends(true, Swiper, {
+    Swiper.extend(true, Swiper, {
         domClass: {
             add: function(dom, class_name) {
                 var h5_class = dom.classList;
@@ -372,7 +402,7 @@
                     return h5_class.add(class_name);
                 }
                 var class_str = "";
-                if (!dom_class.contains(dom, class_name)) {
+                if (!this.contains(dom, class_name)) {
                     class_str = " " + class_name;
                 }
                 dom.className += class_str;
@@ -401,7 +431,7 @@
 
     // 
  
-    Swiper.extends(true, Swiper, {
+    Swiper.extend(true, Swiper, {
         bind: function(element, type, handle) {
             function __eventHandler(e) {
                 var event = e || window.event
