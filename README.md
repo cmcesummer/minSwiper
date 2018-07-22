@@ -1,6 +1,6 @@
 # minSwiper
 
-拿来即用的迷你swiper，配置简单，拓展性好，可覆盖样式。
+拿来即用的迷你swiper，配置简单，拓展性好，可覆盖样式。测试兼容到ie7.
 
 ## 使用
 支持多种引入方式。  
@@ -132,5 +132,11 @@ Swiper.delegate(element, type, selector , handle)
 目前的第三个样式纯粹在搞笑，我再想想
 
 ## CHANGELOG
-添加了事件代理，写的有点绕，不过是为了精简代码
+1. 添加了事件代理，写的有点绕，不过是为了精简代码。
+2. 修改了ie的兼容问题，目前自己测试可以兼容到ie7
+ - ie8 array没有indexOf方法。
+ - ie8 DOM 不能进行深拷贝，否则浏览器卡死，难道是因为内存泄漏？
+ - ie8 不能通过 [].slice.call(DOM)把伪数组转换成数组。
+ - ie8 不能直接添加style到head `_appenStyle`函数奇怪的写法就是这个原因
+ - ie8 `extends`貌似是关键字之类的东西
 
