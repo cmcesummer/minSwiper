@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="./../index.js"></script>
+    <script src="./../indes.js"></script>
 </head>
 <body>
     <div id="box"></div>
@@ -25,7 +25,7 @@
     </div>
 
     <script>
-        new Swiper({
+        var s1 = Swiper.init({
             container: document.getElementById("box"),
             content: [
                 {src: 'https://segmentfault.com/img/remote/1460000015482456', href: '', target: true}, 
@@ -35,8 +35,11 @@
             ],
             have_button: true,
             have_bar: true,
-            // auto: 10000
+            // auto: 1000
         });
+
+        Swiper.autoplay(s1, 1000)
+
         var a = document.querySelector('.a'),
             b = document.querySelector('.base'),
             c = document.querySelector('.c');
