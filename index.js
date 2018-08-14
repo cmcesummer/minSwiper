@@ -381,6 +381,9 @@
             if (!parent) {
                 parent = document;
             }
+            if(parent.querySelectorAll) {
+                return parent.querySelectorAll('.' + classname);
+            }
             if (parent.getElementsByClassName) {
                 return parent.getElementsByClassName(classname);
             }
